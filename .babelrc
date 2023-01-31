@@ -14,15 +14,16 @@
     },
     "production": {
       "presets": [
-        "@babel/preset-env", 
-        "minify", 
+        "@babel/preset-env",
+        "minify",
         "@babel/preset-react",
         "@babel/preset-typescript"
         // "minify"
-      ], 
+      ],
       "comments": false,
       "plugins": [
-        "add-module-exports"
+        "add-module-exports",
+        "babel-plugin-react-css-modules"
       ]
     }
   }

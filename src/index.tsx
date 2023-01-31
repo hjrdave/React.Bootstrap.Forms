@@ -1,0 +1,64 @@
+import React from 'react';
+import { default as FormComp, Props } from './Form';
+import Control from './components/molecules/Control';
+import CheckBox from './components/molecules/Checkbox';
+// import Radio from './components/molecules/Radio';
+// import Number from './components/molecules/Number';
+// import TextArea from './components/molecules/TextArea';
+// import Phone from './components/molecules/Phone';
+// import Email from './components/molecules/Email';
+// import Select from './components/molecules/Select';
+// import Suggest from './components/molecules/Suggest';
+// import Submit from './components/molecules/Submit';
+// import Reset from './components/molecules/Reset';
+// import Switch from './components/molecules/Switch';
+import Text from './components/molecules/Text';
+import Group from './components/organisms/Group';
+import RadioGroup from './components/organisms/RadioGroup';
+import FormList from './components/organisms/FormList';
+// import Year from './components/molecules/Year';
+import { usePublicForm } from './use-form';
+
+export interface IForm {
+    (props: Props): JSX.Element;
+    Control: typeof Control;
+    CheckBox: typeof CheckBox;
+    // Radio: typeof Radio;
+    // Number: typeof Number;
+    // TextArea: typeof TextArea;
+    // Phone: typeof Phone;
+    // Email: typeof Email;
+    // Select: typeof Select;
+    // Year: typeof Year;
+    // Suggest: typeof Suggest;
+    // Submit: typeof Submit;
+    // Reset: typeof Reset;
+    // Switch: typeof Switch;
+    Group: typeof Group;
+    RadioGroup: typeof RadioGroup;
+    FormList: typeof FormList;
+    Text: typeof Text;
+    useForm: typeof usePublicForm;
+}
+
+const Form: IForm = (props) => (<FormComp {...props} />);
+Form.Control = Control;
+Form.CheckBox = CheckBox;
+// Form.Radio = Radio;
+// Form.Number = Number;
+// Form.TextArea = TextArea;
+// Form.Phone = Phone;
+// Form.Email = Email;
+// Form.Select = Select;
+// Form.Year = Year;
+// Form.Suggest = Suggest;
+// Form.Submit = Submit;
+// Form.Reset = Reset;
+// Form.Switch = Switch;
+Form.Text = Text;
+Form.Group = Group;
+Form.RadioGroup = RadioGroup;
+Form.FormList = FormList;
+Form.useForm = usePublicForm;
+
+export default Form;
