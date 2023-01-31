@@ -19,7 +19,7 @@ interface Props {
     data?: { [key: string]: any }[];
     defaultData: { [key: string]: any };
     [key: string]: any;
-    noFirstRowDelete: boolean;
+    noFirstRowDelete?: boolean;
     onAdd?: () => void;
     onDelete?: (dataToDelete?: { [key: string]: any, ptrui_id: string }) => void;
     onChange?: (data: { [key: string]: any }[]) => void;

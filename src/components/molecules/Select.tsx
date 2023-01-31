@@ -10,7 +10,7 @@ import useForm from '../../use-form';
 import IForm from '../../interfaces';
 import useFormGroup from '../organisms/Group/use-form-group';
 import { useNonInitialEffect, useCleanupEffect, useObject } from 'react-cork';
-import styles from '../form.module.scss';
+//import styles from '../form.module.scss';
 
 interface Props {
     mapToValue?: string | number;
@@ -163,7 +163,7 @@ export default function Select({ name, activeItem: _activeItem, error, loading, 
     return (
         <>
             <Dropdown
-                className={`${styles.controlDropdown} ${className}`}
+                className={`styles.controlDropdown} ${className}`}
                 show={(isReadOnly) ? false : showDropdown}
                 onToggle={customToggle}
                 id={'fooMoo'}
@@ -186,7 +186,7 @@ export default function Select({ name, activeItem: _activeItem, error, loading, 
                     }}
                     readOnly={isReadOnly}
                     required={required}
-                    caretDown
+                    //caretDown
                     enableDropdownToggle
                     highlightDanger={highlightDanger}
                     disabled={disabled}

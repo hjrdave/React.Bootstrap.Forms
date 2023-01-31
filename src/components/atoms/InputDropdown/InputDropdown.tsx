@@ -5,7 +5,7 @@ import InputLoading from '../InputLoading';
 import InputError from '../InputError';
 import InputToolTip from '../InputToolTip';
 import InputFooter from '../InputFooter';
-import styles from './inputDropdown.module.scss';
+//import styles from './inputDropdown.module.scss';
 
 interface Props {
     children?: JSX.Element | JSX.Element[];
@@ -25,7 +25,7 @@ export default function InputDropdown({ maxHeight, children, className, withInpu
 
     return (
         <>
-            <ListItemDropdown maxHeight={maxHeight} className={`${(withInputIcon) ? styles.withIcon : ''} ${className} `} flushMenu={flushMenu} tabIndex={tabIndex}>
+            <ListItemDropdown maxHeight={maxHeight} className={`${(withInputIcon) ? /*styles.withIcon*/'' : ''} ${className} `} flushMenu={flushMenu} tabIndex={tabIndex}>
                 {
                     (loading) ? <InputLoading /> :
                         (error) ? <InputError error={error} /> :
