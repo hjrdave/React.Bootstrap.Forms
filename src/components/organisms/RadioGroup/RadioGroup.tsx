@@ -24,7 +24,7 @@ interface Props {
     highlightMissing?: boolean;
     tabIndex?: number;
 }
-function GroupComp({ children, name, onChange, readOnly: disabled, required, isInvalid, isValid, className, activeChecked, label, toolTip, highlightMissing, tabIndex: _tabIndex }: Props) {
+function RadioGroupComp({ children, name, onChange, readOnly: disabled, required, isInvalid, isValid, className, activeChecked, label, toolTip, highlightMissing, tabIndex: _tabIndex }: Props) {
 
     const controlType = 'radio';
     const form = useForm();
@@ -140,5 +140,5 @@ function GroupComp({ children, name, onChange, readOnly: disabled, required, isI
     )
 }
 
-const RadioGroup = withTreble(GroupComp, { store: Store });
+const RadioGroup = withTreble(RadioGroupComp, { store: Store }) as typeof RadioGroupComp;
 export default RadioGroup;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRadioGroupProvider } from './Store';
-const useFormGroup = () => {
+const useRadioGroup = () => {
 
     const [State, Store, Util] = useRadioGroupProvider();
     const isProvider = (State && Store && Util) ? true : false;
@@ -86,4 +86,4 @@ const useFormGroup = () => {
     }
 }
 
-export default useFormGroup;
+export default useRadioGroup;

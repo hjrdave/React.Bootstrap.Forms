@@ -25,12 +25,14 @@ interface Props {
     onChange?: (data: { [key: string]: any }[]) => void;
     children?: JSX.Element | JSX.Element[];
     tabIndex?: number;
+    max?: number;
 };
 
-function FormListComp({ className, as: CustomRow, data: _data, defaultData, onChange: _onChange, onDelete: _onDelete, onAdd: _onAdd, addBtnLabel, addBtnIcon, noFirstRowDelete, children, tabIndex, ...props }: Props) {
+function FormListComp({ className, as: CustomRow, data: _data, defaultData, onChange: _onChange, onDelete: _onDelete, onAdd: _onAdd, addBtnLabel, addBtnIcon, noFirstRowDelete, children, tabIndex, max, ...props }: Props) {
 
 
     const { listData, setListData } = useFormList((_data) ? _data.map((item) => ({ ...item, ptrui_id: uniqid() })) : []);
+    const canAddRows = max === undefined || listData.length < max;
 
     function areEqualShallow(a: any, b: any) {
         for (var key in a) {
@@ -58,11 +60,14 @@ function FormListComp({ className, as: CustomRow, data: _data, defaultData, onCh
     }
 
     const onAdd = () => {
-        const updatedList = [...listData, { ...defaultData, ptrui_id: uniqid() }];
-        if (_onAdd) {
-            _onAdd();
+        if (canAddRows) {
+            const updatedList = [...listData, { ...defaultData, ptrui_id: uniqid() }];
+            if (_onAdd) {
+                _onAdd();
+            }
+            setListData(updatedList as any);
         }
-        setListData(updatedList as any);
+
     }
 
     const onDelete = (ptrui_id: string) => {
@@ -93,10 +98,14 @@ function FormListComp({ className, as: CustomRow, data: _data, defaultData, onCh
         <>
             <div className={`${className}`}>
                 <div className={'d-flex justify-content-end'}>
-                    <Button variant={'bg-none'} onClick={() => onAdd()} tabIndex={tabIndex}>
-                        {addBtnIcon}
-                        {addBtnLabel}
-                    </Button>
+                    {
+                        (canAddRows) ?
+                            <Button variant={'bg-none'} onClick={() => onAdd()} tabIndex={tabIndex}>
+                                {addBtnIcon}
+                                {addBtnLabel}
+                            </Button> : null
+                    }
+
                 </div>
                 <div>
                     <Col>
