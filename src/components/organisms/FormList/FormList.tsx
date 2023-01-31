@@ -9,6 +9,7 @@ import { withTreble } from 'treble-gsm';
 
 interface Props {
     className?: string;
+    addBtnIcon?: JSX.Element;
     addBtnLabel?: string;
     as: (props: {
         data: { [key: string]: any };
@@ -26,7 +27,7 @@ interface Props {
     tabIndex?: number;
 };
 
-function FormListComp({ className, as: CustomRow, data: _data, defaultData, onChange: _onChange, onDelete: _onDelete, onAdd: _onAdd, addBtnLabel, noFirstRowDelete, children, tabIndex, ...props }: Props) {
+function FormListComp({ className, as: CustomRow, data: _data, defaultData, onChange: _onChange, onDelete: _onDelete, onAdd: _onAdd, addBtnLabel, addBtnIcon, noFirstRowDelete, children, tabIndex, ...props }: Props) {
 
 
     const { listData, setListData } = useFormList((_data) ? _data.map((item) => ({ ...item, ptrui_id: uniqid() })) : []);
@@ -92,8 +93,10 @@ function FormListComp({ className, as: CustomRow, data: _data, defaultData, onCh
         <>
             <div className={`${className}`}>
                 <div className={'d-flex justify-content-end'}>
-                    {/* <Button.Add variant={'bg-none'} onClick={() => onAdd()} label={addBtnLabel} tabIndex={tabIndex} /> */}
-                    <Button variant={'bg-none'} onClick={() => onAdd()} tabIndex={tabIndex}>{addBtnLabel}</Button>
+                    <Button variant={'bg-none'} onClick={() => onAdd()} tabIndex={tabIndex}>
+                        {addBtnIcon}
+                        {addBtnLabel}
+                    </Button>
                 </div>
                 <div>
                     <Col>
@@ -140,5 +143,5 @@ function FormListComp({ className, as: CustomRow, data: _data, defaultData, onCh
         </>
     )
 };
-const FormList = withTreble(FormListComp, { store: Store });
+const FormList = withTreble(FormListComp, { store: Store }) as typeof FormListComp;
 export default FormList;
