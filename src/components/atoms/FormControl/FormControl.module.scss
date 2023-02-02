@@ -192,8 +192,9 @@
 
     .inputGroupText {
         width: 36px !important;
+        
     }
-
+        
 }
 
 .invalidToolTip {
@@ -231,5 +232,10 @@
         margin-left: 0px !important;
         border-top-left-radius: 0 !important;
         border-bottom-left-radius: 0 !important;
+    }
+}
+.inputGroup{
+:global(.input-group-text) {
+        border-radius: .375rem 0rem 0rem .375rem !important;
     }
 }

@@ -98,123 +98,98 @@ export default function FormControl({ hideLabel, name, caption, className, disab
                         {
                             (label && !hideLabel) ? <Form.Label>{label} {(toolTip) ? '' : null}</Form.Label> : null
                         }
-                        <InputGroup hasValidation>
+                        <InputGroup hasValidation className={styles.inputGroup}>
                             <>
                                 {
                                     (icon) ? <InputGroup.Text id={`${controlID}_icon`} className={styles.inputGroupText}>{icon}</InputGroup.Text> : null
                                 }
-                                {
-                                    (as === 'select') ?
-                                        <></>
-                                        // <Form.Select
-                                        //     ref={forwardRef as any}
-                                        //     defaultValue={defaultValue}
-                                        //     value={value}
-                                        //     placeholder={placeHolder}
-                                        //     onClick={onClickFN}
-                                        //     onChange={onChangeFN}
-                                        //     onKeyDown={(e) => { if (e.keyCode == 13 || e.key === 'Enter') { e.preventDefault(); return false }; if (onKeyDown) { onKeyDown(e) } }}
-                                        //     required={required}
-                                        //     disabled={(readOnly) ? true : (disabled) ? true : false}
-                                        //     size={'sm'}
-                                        //     isValid={isValid}
-                                        //     isInvalid={isInvalid}
-                                        //     onFocus={onFocus}
-                                        //     onFocusCapture={onFocusCapture}
-                                        //     autoComplete={autoComplete}
-                                        // >
-                                        //     {
-                                        //         (children) ? children : <option hidden>Please Choose</option>
-                                        //     }
-                                        // </Form.Select>
-                                        :
 
-                                        <div style={{ display: 'flex', flexWrap: 'wrap', width: icon ? "calc(100% - 35px)" : "100%" }} className={(icon) ? styles.hasIcon : ''}>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', width: icon ? "calc(100% - 35px)" : "100%" }} className={(icon) ? styles.hasIcon : ''}>
 
-                                            {
-                                                (enableDropdownToggle) ?
-                                                    <Dropdown.Toggle as={'div'} style={{ width: "100%" }}>
-                                                        <Form.Control
-                                                            ref={forwardRef}
-                                                            as={as}
-                                                            defaultValue={defaultValue}
-                                                            value={value}
-                                                            placeholder={placeHolder}
-                                                            onClick={onClickFN}
-                                                            onKeyDown={(e) => { if (e.keyCode == 13 || e.key === 'Enter') { e.preventDefault(); return false }; if (onKeyDown) { onKeyDown(e) } }}
-                                                            onChange={onChangeFN}
-                                                            onFocus={onFocus}
-                                                            onFocusCapture={onFocusCapture}
-                                                            type={(type) ? type : 'text'}
-                                                            required={required}
-                                                            disabled={disabled}
-                                                            readOnly={readOnly}
-                                                            size={'sm'}
-                                                            isValid={isValid}
-                                                            isInvalid={isInvalid}
-                                                            min={min}
-                                                            max={max}
-                                                            step={step}
-                                                            rows={rows}
-                                                            pattern={pattern}
-                                                            maxLength={(maxlength) ? maxlength : 255}
-                                                            className={`${(caretDown ? `${styles.textboxBorderCaretDown}` : `${styles.textboxNoBorderCaretDown}`)} ${(highlightDanger) ? styles.highlightDanger : ''} ${controlClassName}`}
-                                                            autoComplete={autoComplete}
-                                                            onInput={onInput}
-                                                            autoFocus={autoFocus}
-                                                            tabIndex={tabIndex}
-                                                        >
-                                                            {children}
-                                                        </Form.Control>
-                                                    </Dropdown.Toggle> :
-                                                    <Form.Control
-                                                        ref={forwardRef}
-                                                        as={as}
-                                                        defaultValue={defaultValue}
-                                                        value={value}
-                                                        placeholder={placeHolder}
-                                                        onClick={onClickFN}
-                                                        onKeyDown={(e) => { if (e.keyCode == 13 || e.key === 'Enter') { e.preventDefault(); return false }; if (onKeyDown) { onKeyDown(e) } }}
-                                                        onChange={onChangeFN}
-                                                        onFocus={onFocus}
-                                                        onFocusCapture={onFocusCapture}
-                                                        type={(type) ? type : 'text'}
-                                                        required={required}
-                                                        disabled={disabled}
-                                                        readOnly={readOnly}
-                                                        size={'sm'}
-                                                        isValid={isValid}
-                                                        isInvalid={isInvalid}
-                                                        min={min}
-                                                        max={max}
-                                                        step={step}
-                                                        rows={rows}
-                                                        pattern={pattern}
-                                                        maxLength={(maxlength) ? maxlength : 255}
-                                                        className={`${(caretDown ? `${styles.textboxBorderCaretDown}` : `${styles.textboxNoBorderCaretDown}`)} ${(highlightDanger) ? styles.highlightDanger : ''} ${controlClassName}`}
-                                                        autoComplete={autoComplete}
-                                                        onInput={onInput}
-                                                        autoFocus={autoFocus}
-                                                        tabIndex={tabIndex}
-                                                    >
-                                                        {children}
-                                                    </Form.Control>
-                                            }
+                                    {
+                                        (enableDropdownToggle) ?
+                                            <Dropdown.Toggle as={'div'} style={{ width: "100%" }}>
+                                                <Form.Control
+                                                    ref={forwardRef}
+                                                    as={as}
+                                                    defaultValue={defaultValue}
+                                                    value={value}
+                                                    placeholder={placeHolder}
+                                                    onClick={onClickFN}
+                                                    onKeyDown={(e) => { if (e.keyCode == 13 || e.key === 'Enter') { e.preventDefault(); return false }; if (onKeyDown) { onKeyDown(e) } }}
+                                                    onChange={onChangeFN}
+                                                    onFocus={onFocus}
+                                                    onFocusCapture={onFocusCapture}
+                                                    type={(type) ? type : 'text'}
+                                                    required={required}
+                                                    disabled={disabled}
+                                                    readOnly={readOnly}
+                                                    size={'sm'}
+                                                    isValid={isValid}
+                                                    isInvalid={isInvalid}
+                                                    min={min}
+                                                    max={max}
+                                                    step={step}
+                                                    rows={rows}
+                                                    pattern={pattern}
+                                                    maxLength={(maxlength) ? maxlength : 255}
+                                                    className={`${(caretDown ? `${styles.textboxBorderCaretDown}` : `${styles.textboxNoBorderCaretDown}`)} ${(highlightDanger) ? styles.highlightDanger : ''} ${controlClassName}`}
+                                                    autoComplete={autoComplete}
+                                                    onInput={onInput}
+                                                    autoFocus={autoFocus}
+                                                    tabIndex={tabIndex}
+                                                >
+                                                    {children}
+                                                </Form.Control>
+                                            </Dropdown.Toggle> :
+                                            <Form.Control
+                                                ref={forwardRef}
+                                                as={as}
+                                                defaultValue={defaultValue}
+                                                value={value}
+                                                placeholder={placeHolder}
+                                                onClick={onClickFN}
+                                                onKeyDown={(e) => { if (e.keyCode == 13 || e.key === 'Enter') { e.preventDefault(); return false }; if (onKeyDown) { onKeyDown(e) } }}
+                                                onChange={onChangeFN}
+                                                onFocus={onFocus}
+                                                onFocusCapture={onFocusCapture}
+                                                type={(type) ? type : 'text'}
+                                                required={required}
+                                                disabled={disabled}
+                                                readOnly={readOnly}
+                                                size={'sm'}
+                                                isValid={isValid}
+                                                isInvalid={isInvalid}
+                                                min={min}
+                                                max={max}
+                                                step={step}
+                                                rows={rows}
+                                                pattern={pattern}
+                                                maxLength={(maxlength) ? maxlength : 255}
+                                                className={`${(caretDown ? `${styles.textboxBorderCaretDown}` : `${styles.textboxNoBorderCaretDown}`)} ${(highlightDanger) ? styles.highlightDanger : ''} ${controlClassName}`}
+                                                autoComplete={autoComplete}
+                                                onInput={onInput}
+                                                autoFocus={autoFocus}
+                                                tabIndex={tabIndex}
+                                            >
+                                                {children}
+                                            </Form.Control>
+                                    }
 
-                                            {(caretDown) &&
-                                                <div className={styles.divCaretDown} style={{ pointerEvents: 'none' }}>
-                                                    <i className={`fa-solid fa-caret-down ${styles.iCaretDown}`}></i>
-                                                </div>
-                                            }
-                                            {
-                                                (invalidFeedback) ?
-
-                                                    <Form.Control.Feedback type="invalid" tooltip className={'styles.invalidToolTip'}>
-                                                        {invalidFeedback}
-                                                    </Form.Control.Feedback> : null
-                                            }
+                                    {(caretDown) &&
+                                        <div className={styles.divCaretDown} style={{ pointerEvents: 'none' }}>
+                                            <i className={`fa-solid fa-caret-down ${styles.iCaretDown}`}></i>
                                         </div>
-                                }
+                                    }
+                                    {
+                                        (invalidFeedback) ?
+
+                                            <Form.Control.Feedback type="invalid" tooltip className={'styles.invalidToolTip'}>
+                                                {invalidFeedback}
+                                            </Form.Control.Feedback> : null
+                                    }
+                                </div>
+
                             </>
                         </InputGroup>
                         {
