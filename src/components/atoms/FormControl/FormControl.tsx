@@ -2,8 +2,8 @@ import React from 'react';
 import { Dropdown } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import styles from './FormControl.module.scss';
 //import ToolTip from '../tool-tip';
-//import styles from './formControl.module.scss';
 
 export interface Props {
     name: string;
@@ -87,7 +87,7 @@ export default function FormControl({ hideLabel, name, caption, className, disab
                         onKeyDown={(e) => { if (e.keyCode == 13 || e.key === 'Enter') { e.preventDefault(); return false }; if (onKeyDown) { onKeyDown(e) } }}
                         name={controlID}
                         inline={inline}
-                        className={`${(highlightDanger) ? 'styles.highlightDangerCheckBox' : ''} ${className}`}
+                        className={`${(highlightDanger) ? styles.highlightDangerCheckBox : ''} ${className}`}
                         required={required}
                         isInvalid={isInvalid}
                         isValid={isValid}
@@ -101,7 +101,7 @@ export default function FormControl({ hideLabel, name, caption, className, disab
                         <InputGroup hasValidation>
                             <>
                                 {
-                                    (icon) ? <InputGroup.Text id={`${controlID}_icon`} className={`styles.inputGroupText}`}>{icon}</InputGroup.Text> : null
+                                    (icon) ? <InputGroup.Text id={`${controlID}_icon`} className={styles.inputGroupText}>{icon}</InputGroup.Text> : null
                                 }
                                 {
                                     (as === 'select') ?
@@ -128,7 +128,7 @@ export default function FormControl({ hideLabel, name, caption, className, disab
                                         </Form.Select>
                                         :
 
-                                        <div style={{ display: 'flex', flexWrap: 'wrap', width: icon ? "calc(100% - 35px)" : "100%" }} className={(icon) ? 'styles.hasIcon' : ''}>
+                                        <div style={{ display: 'flex', flexWrap: 'wrap', width: icon ? "calc(100% - 35px)" : "100%" }} className={(icon) ? styles.hasIcon : ''}>
 
                                             {
                                                 (enableDropdownToggle) ?
@@ -157,7 +157,7 @@ export default function FormControl({ hideLabel, name, caption, className, disab
                                                             rows={rows}
                                                             pattern={pattern}
                                                             maxLength={(maxlength) ? maxlength : 255}
-                                                            className={`${name.startsWith('ptrui-') ? '' : (caretDown ? `styles.textboxBorderCaretDown}` : `styles.textboxNoBorderCaretDown}`)} ${(highlightDanger) ? 'styles.highlightDanger' : ''} ${controlClassName}`}
+                                                            className={`${(caretDown ? `${styles.textboxBorderCaretDown}` : `${styles.textboxNoBorderCaretDown}`)} ${(highlightDanger) ? styles.highlightDanger : ''} ${controlClassName}`}
                                                             autoComplete={autoComplete}
                                                             onInput={onInput}
                                                             autoFocus={autoFocus}
@@ -190,7 +190,7 @@ export default function FormControl({ hideLabel, name, caption, className, disab
                                                         rows={rows}
                                                         pattern={pattern}
                                                         maxLength={(maxlength) ? maxlength : 255}
-                                                        className={`${name.startsWith('ptrui-') ? '' : (caretDown ? `styles.textboxBorderCaretDown}` : `styles.textboxNoBorderCaretDown}`)} ${(highlightDanger) ? 'styles.highlightDanger' : ''} ${controlClassName}`}
+                                                        className={`${(caretDown ? `${styles.textboxBorderCaretDown}` : `${styles.textboxNoBorderCaretDown}`)} ${(highlightDanger) ? styles.highlightDanger : ''} ${controlClassName}`}
                                                         autoComplete={autoComplete}
                                                         onInput={onInput}
                                                         autoFocus={autoFocus}
@@ -200,9 +200,9 @@ export default function FormControl({ hideLabel, name, caption, className, disab
                                                     </Form.Control>
                                             }
 
-                                            {(caretDown && !name.startsWith('ptrui-')) &&
-                                                <div className={`styles.divCaretDown}`} style={{ pointerEvents: 'none' }}>
-                                                    <i className={`fas fa-angle-down styles.iCaretDown}`} ></i>
+                                            {(caretDown) &&
+                                                <div className={styles.divCaretDown} style={{ pointerEvents: 'none' }}>
+                                                    <i className={`fas fa-angle-down ${styles.iCaretDown}`} ></i>
                                                 </div>
                                             }
                                             {

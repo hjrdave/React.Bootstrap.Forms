@@ -1,16 +1,17 @@
 import React from 'react';
-import InputDropdown from '../atoms/InputDropdown';
-import InputItem, { IInputItem } from '../atoms/InputItem';
-import FormControl from '../atoms/FormControl';
-import InputToolTip from '../atoms/InputToolTip';
-import ListItemDivider from '../atoms/ListItemDivider';
-import CustomInputItem from '../atoms/CustomInputItem';
+import InputDropdown from '../../atoms/InputDropdown';
+import InputItem, { IInputItem } from '../../atoms/InputItem';
+import FormControl from '../../atoms/FormControl';
+import InputToolTip from '../../atoms/InputToolTip';
+import ListItemDivider from '../../atoms/ListItemDivider';
+import CustomInputItem from '../../atoms/CustomInputItem';
 import { Dropdown } from 'react-bootstrap';
-import useForm from '../../use-form';
-import IForm from '../../interfaces';
-import useFormGroup from '../organisms/Group/use-form-group';
+import useForm from '../../../use-form';
+import IForm from '../../../interfaces';
+import useFormGroup from '../../organisms/Group/use-form-group';
 import { useNonInitialEffect, useCleanupEffect, useObject } from 'react-cork';
-//import styles from '../form.module.scss';
+import styles from './Select.module.scss';
+
 
 interface Props {
     mapToValue?: string | number;
@@ -163,7 +164,7 @@ export default function Select({ name, activeItem: _activeItem, error, loading, 
     return (
         <>
             <Dropdown
-                className={`styles.controlDropdown} ${className}`}
+                className={`${styles?.controlDropdown} ${className}`}
                 show={(isReadOnly) ? false : showDropdown}
                 onToggle={customToggle}
                 id={'fooMoo'}
@@ -174,7 +175,7 @@ export default function Select({ name, activeItem: _activeItem, error, loading, 
                     forwardRef={ref}
                     name={name}
                     label={label}
-                    as={'input'}
+                    as={'select'}
                     toolTip={toolTip}
                     value={activeItem?.text === undefined ? "" : activeItem?.text === 'All' || activeItem?.text === 'Todos' ? 'All' : activeItem?.text}
                     placeHolder={displayValue}
@@ -186,7 +187,7 @@ export default function Select({ name, activeItem: _activeItem, error, loading, 
                     }}
                     readOnly={isReadOnly}
                     required={required}
-                    //caretDown
+                    caretDown
                     enableDropdownToggle
                     highlightDanger={highlightDanger}
                     disabled={disabled}

@@ -17,6 +17,7 @@ import Group from './components/organisms/Group';
 import RadioGroup from './components/organisms/RadioGroup';
 import FormList from './components/organisms/FormList';
 // import Year from './components/molecules/Year';
+import useUpload from './hooks/use-upload';
 import { usePublicForm } from './use-form';
 
 export interface IForm {
@@ -39,6 +40,7 @@ export interface IForm {
     FormList: typeof FormList;
     Text: typeof Text;
     useForm: typeof usePublicForm;
+    useUpload: typeof useUpload;
 }
 
 const Form: IForm = (props) => (<FormComp {...props} />);
@@ -60,5 +62,6 @@ Form.Group = Group;
 Form.RadioGroup = RadioGroup;
 Form.FormList = FormList;
 Form.useForm = usePublicForm;
+Form.useUpload = useUpload;
 
 export default Form;
