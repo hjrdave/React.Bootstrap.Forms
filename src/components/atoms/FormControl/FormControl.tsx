@@ -105,27 +105,28 @@ export default function FormControl({ hideLabel, name, caption, className, disab
                                 }
                                 {
                                     (as === 'select') ?
-                                        <Form.Select
-                                            ref={forwardRef as any}
-                                            defaultValue={defaultValue}
-                                            value={value}
-                                            placeholder={placeHolder}
-                                            onClick={onClickFN}
-                                            onChange={onChangeFN}
-                                            onKeyDown={(e) => { if (e.keyCode == 13 || e.key === 'Enter') { e.preventDefault(); return false }; if (onKeyDown) { onKeyDown(e) } }}
-                                            required={required}
-                                            disabled={(readOnly) ? true : (disabled) ? true : false}
-                                            size={'sm'}
-                                            isValid={isValid}
-                                            isInvalid={isInvalid}
-                                            onFocus={onFocus}
-                                            onFocusCapture={onFocusCapture}
-                                            autoComplete={autoComplete}
-                                        >
-                                            {
-                                                (children) ? children : <option hidden>Please Choose</option>
-                                            }
-                                        </Form.Select>
+                                        <></>
+                                        // <Form.Select
+                                        //     ref={forwardRef as any}
+                                        //     defaultValue={defaultValue}
+                                        //     value={value}
+                                        //     placeholder={placeHolder}
+                                        //     onClick={onClickFN}
+                                        //     onChange={onChangeFN}
+                                        //     onKeyDown={(e) => { if (e.keyCode == 13 || e.key === 'Enter') { e.preventDefault(); return false }; if (onKeyDown) { onKeyDown(e) } }}
+                                        //     required={required}
+                                        //     disabled={(readOnly) ? true : (disabled) ? true : false}
+                                        //     size={'sm'}
+                                        //     isValid={isValid}
+                                        //     isInvalid={isInvalid}
+                                        //     onFocus={onFocus}
+                                        //     onFocusCapture={onFocusCapture}
+                                        //     autoComplete={autoComplete}
+                                        // >
+                                        //     {
+                                        //         (children) ? children : <option hidden>Please Choose</option>
+                                        //     }
+                                        // </Form.Select>
                                         :
 
                                         <div style={{ display: 'flex', flexWrap: 'wrap', width: icon ? "calc(100% - 35px)" : "100%" }} className={(icon) ? styles.hasIcon : ''}>
@@ -202,7 +203,7 @@ export default function FormControl({ hideLabel, name, caption, className, disab
 
                                             {(caretDown) &&
                                                 <div className={styles.divCaretDown} style={{ pointerEvents: 'none' }}>
-                                                    <i className={`fas fa-angle-down ${styles.iCaretDown}`} ></i>
+                                                    <i className={`fa-solid fa-caret-down ${styles.iCaretDown}`}></i>
                                                 </div>
                                             }
                                             {

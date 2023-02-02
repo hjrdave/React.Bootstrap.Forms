@@ -175,7 +175,7 @@ export default function Select({ name, activeItem: _activeItem, error, loading, 
                     forwardRef={ref}
                     name={name}
                     label={label}
-                    as={'select'}
+                    as={'input'}
                     toolTip={toolTip}
                     value={activeItem?.text === undefined ? "" : activeItem?.text === 'All' || activeItem?.text === 'Todos' ? 'All' : activeItem?.text}
                     placeHolder={displayValue}
