@@ -14,6 +14,11 @@
 //     export default content
 // }
 
+
+declare module "@fortawesome/fontawesome-free" {
+    function FontAwesomeIcon(props: { icon: string }): JSX.Element;
+    export default FontAwesomeIcon;
+}
 declare module "*.scss" {
     const styles: { [className: string]: string };
     export default styles;

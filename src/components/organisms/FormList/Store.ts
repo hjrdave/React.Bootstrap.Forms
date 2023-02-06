@@ -2,7 +2,7 @@ import { useScopedTreble, createStore, useTreble, TrebleGSM } from 'treble-gsm';
 import { TrebleLM } from 'treble-list-manager';
 
 export interface IStoreItems {
-    listData: { [key: string]: any, ptrui_id: string }[];
+    listData: { [key: string]: any, Id: string | number }[];
 }
 const actionKeys = {
     ['setListData']: 'setListData'

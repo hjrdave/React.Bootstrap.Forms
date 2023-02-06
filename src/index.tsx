@@ -1,10 +1,12 @@
 import React from 'react';
+import { IFormData } from './interfaces';
 import { default as FormComp, Props } from './Form';
 import Control from './components/molecules/Control';
 import CheckBox from './components/molecules/Checkbox';
 import Radio from './components/molecules/Radio';
 import NumberInput from './components/molecules/Number';
 import Amount from './components/molecules/Amount';
+import Upload from './components/molecules/Upload';
 // import TextArea from './components/molecules/TextArea';
 // import Phone from './components/molecules/Phone';
 // import Email from './components/molecules/Email';
@@ -28,6 +30,7 @@ export interface IForm {
     Radio: typeof Radio;
     Number: typeof NumberInput;
     Amount: typeof Amount;
+    Upload: typeof Upload;
     // TextArea: typeof TextArea;
     // Phone: typeof Phone;
     // Email: typeof Email;
@@ -51,6 +54,7 @@ Form.CheckBox = CheckBox;
 Form.Radio = Radio;
 Form.Number = NumberInput;
 Form.Amount = Amount;
+Form.Upload = Upload;
 // Form.TextArea = TextArea;
 // Form.Phone = Phone;
 // Form.Email = Email;
@@ -67,4 +71,6 @@ Form.FormList = FormList;
 Form.useForm = usePublicForm;
 Form.useUpload = useUpload;
 
+
+export type { IFormData }
 export default Form;

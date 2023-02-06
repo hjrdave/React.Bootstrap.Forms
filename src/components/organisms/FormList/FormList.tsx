@@ -1,5 +1,6 @@
 import React from 'react';
 //import Button from '../../button';
+//import FontAwesomeIcon from '@fortawesome/fontawesome-free';
 import uniqid from 'uniqid';
 import useNonInitialEffect from 'react-cork/use-non-initial-effect';
 import useFormList from './use-form-list';
@@ -12,27 +13,40 @@ interface Props {
     addBtnIcon?: JSX.Element;
     addBtnLabel?: string;
     as: (props: {
-        data: { [key: string]: any };
+        data: { Id: string | number, [key: string]: any };
         onChange: (data: { [key: string]: any }) => void;
         [key: string]: any;
     }) => JSX.Element;
-    data?: { [key: string]: any }[];
-    defaultData: { [key: string]: any };
-    [key: string]: any;
+    data?: {
+        Id: string | number,
+        [key: string]: any
+    }[];
+    defaultData?: { [key: string]: any };
+    defaultRowCount?: number;
     noFirstRowDelete?: boolean;
     onAdd?: () => void;
-    onDelete?: (dataToDelete?: { [key: string]: any, ptrui_id: string }) => void;
-    onChange?: (data: { [key: string]: any }[]) => void;
+    onDelete?: (dataToDelete?: {
+        Id: string | number,
+        [key: string]: any,
+    }) => void;
+    onChange?: (data: {
+        Id: string | number,
+        [key: string]: any
+    }[]) => void;
     children?: JSX.Element | JSX.Element[];
     tabIndex?: number;
     max?: number;
 };
 
-function FormListComp({ className, as: CustomRow, data: _data, defaultData, onChange: _onChange, onDelete: _onDelete, onAdd: _onAdd, addBtnLabel, addBtnIcon, noFirstRowDelete, children, tabIndex, max, ...props }: Props) {
+function FormListComp({ className, as: CustomRow, data: _data, defaultData, onChange: _onChange, onDelete: _onDelete, onAdd: _onAdd, addBtnLabel, addBtnIcon, noFirstRowDelete, children, tabIndex, max, defaultRowCount, ...props }: Props) {
 
-
-    const { listData, setListData } = useFormList((_data) ? _data.map((item) => ({ ...item, ptrui_id: uniqid() })) : []);
+    const defaultRows = (defaultRowCount) ? Array.from({ length: defaultRowCount }, (_, i) => ({ Id: uniqid() })) : (noFirstRowDelete) ? [{ Id: uniqid() }] : [];
+    const { listData, setListData } = useFormList((_data) ? _data : defaultRows);
     const canAddRows = max === undefined || listData.length < max;
+
+    React.useEffect(() => {
+        console.log(listData)
+    }, [listData]);
 
     function areEqualShallow(a: any, b: any) {
         for (var key in a) {
@@ -45,7 +59,7 @@ function FormListComp({ className, as: CustomRow, data: _data, defaultData, onCh
 
     const onChange = (data: { [key: string]: any }) => {
 
-        const updatedList = listData.map((item) => ((item.ptrui_id === data.ptrui_id) ? data : item));
+        const updatedList = listData.map((item) => ((item.Id === data.Id) ? data : item));
         let isDifferent: boolean = false;
         for (let i = 0; i < listData.length; i++) {
             if (!(areEqualShallow(listData[i], updatedList[i]))) {
@@ -54,29 +68,31 @@ function FormListComp({ className, as: CustomRow, data: _data, defaultData, onCh
             }
         }
         if (isDifferent) {
-            setListData(updatedList as any);
+            setListData(updatedList);
         }
 
     }
 
     const onAdd = () => {
         if (canAddRows) {
-            const updatedList = [...listData, { ...defaultData, ptrui_id: uniqid() }];
+            const updatedList = [...listData, { Id: uniqid(), ...defaultData }];
+            console.log(updatedList)
             if (_onAdd) {
                 _onAdd();
             }
-            setListData(updatedList as any);
+            setListData(updatedList);
         }
 
     }
 
-    const onDelete = (ptrui_id: string) => {
-        const updatedList = listData.filter((item) => item.ptrui_id !== ptrui_id);
+    const onDelete = (Id: string | number) => {
+        const updatedList = listData.filter((item) => item.Id !== Id);
         if (_onDelete) {
-            const itemToDelete = listData.filter((item) => item.ptrui_id === ptrui_id)[0];
+            const itemToDelete = listData.filter((item) => item.Id === Id)[0];
             _onDelete(itemToDelete);
         }
-        setListData(updatedList as any);
+        console.log(Id);
+        setListData(updatedList);
     }
 
     useNonInitialEffect(() => {
@@ -87,7 +103,7 @@ function FormListComp({ className, as: CustomRow, data: _data, defaultData, onCh
 
     useNonInitialEffect(() => {
         if (_data) {
-            setListData(_data as any);
+            setListData(_data);
         };
     }, [_data]);
 
@@ -101,7 +117,7 @@ function FormListComp({ className, as: CustomRow, data: _data, defaultData, onCh
                     {
                         (canAddRows) ?
                             <Button variant={'bg-none'} onClick={() => onAdd()} tabIndex={tabIndex}>
-                                {addBtnIcon}
+                                {(addBtnIcon) ? addBtnIcon : <i className="fa-solid fa-circle-plus text-success pe-2"></i>}
                                 {addBtnLabel}
                             </Button> : null
                     }
@@ -111,7 +127,7 @@ function FormListComp({ className, as: CustomRow, data: _data, defaultData, onCh
                     <Col>
                         {
                             (children) ?
-                                <Row className={'pt-2 m-0'}>
+                                <Row className={'pt-0 m-0'}>
                                     <Col sm={11}>
                                         {children}
                                     </Col>
@@ -119,10 +135,10 @@ function FormListComp({ className, as: CustomRow, data: _data, defaultData, onCh
                         }
                         {
                             (listData?.length) ?
-                                listData.map((item: { [key: string]: any }, index) => {
+                                listData.map((item, index) => {
 
                                     return (
-                                        <React.Fragment key={item.ptrui_id}>
+                                        <React.Fragment key={item.Id}>
                                             <>
                                                 <Row className={'pt-2 m-0'}>
                                                     <Col sm={11}>
@@ -132,8 +148,9 @@ function FormListComp({ className, as: CustomRow, data: _data, defaultData, onCh
                                                         {
                                                             (noFirstRowDelete && index === 0) ? null :
                                                                 <i
-                                                                    className="fa-solid fa-trash-can text-danger cursor"
-                                                                    onClick={() => onDelete(item.ptrui_id)}
+                                                                    className="fa-solid fa-circle-minus text-danger"
+                                                                    style={{ cursor: "pointer" }}
+                                                                    onClick={() => onDelete(item.Id)}
                                                                     tabIndex={tabIndex}
                                                                 ></i>
                                                         }

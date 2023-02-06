@@ -3,14 +3,16 @@
  * Docs for this library are located https://react-dropzone.js.org/#section-components
  */
 import React from 'react';
+import { Card, Button } from 'react-bootstrap';
+import DottedCard from '../../atoms/DottedCard';
 import useNonInitialEffect from 'react-cork/use-non-initial-effect';
 import useUpload from '../../../hooks/use-upload';
-import { FileRejection, DropEvent, Accept } from 'react-dropzone'
+import { FileRejection, DropEvent } from 'react-dropzone'
 import styles from './Upload.module.scss';
 
 interface Props {
     variant?: 'light' | 'white';
-    accept: Accept;
+    accept: string[];
     minSize?: number;
     maxSize?: number;
     maxFiles?: number;
@@ -61,9 +63,9 @@ export default function Upload({ multiple, variant, accept, maxFiles: _maxFiles,
         preventDropOnDocument: preventDropOnDocument,
         noClick: noClick,
         noKeyboard: noKeyboard,
-        noDrag: noDrag,
-        noDragEventsBubbling: noDragEventsBubbling,
-        disabled: disabled,
+        noDrag: false/*noDrag*/,
+        noDragEventsBubbling: false/*noDragEventsBubbling*/,
+        disabled: false /*disabled*/,
         onDrop: onDrop,
         onDropAccepted: onDropAccepted,
         onDropRejected: onDropRejected,
@@ -85,73 +87,71 @@ export default function Upload({ multiple, variant, accept, maxFiles: _maxFiles,
     React.useEffect(() => {
         if (fileRejections.length > 0) {
             if (fileRejections.length > maxFiles) {
-                // message.createError(`${i18n.translateThis("You may only upload", i18n.localize.upload.error.firstPart)} ${maxFiles} ${(maxFiles === 1) ? i18n.translateThis("file", i18n.localize.upload.error.file) : i18n.translateThis("files", i18n.localize.upload.error.files)
-                //     } ${i18n.translateThis("at a time.", i18n.localize.upload.error.end)}`)
+                const msg = `You may only upload ${maxFiles} ${(maxFiles === 1) ? "file" : "files"} at a time.`;
             } else {
-                // const invalidTypeMsg = `${i18n.translateThis("When importing, you must choose a file with a", i18n.localize.fileUpload.invalidType1)} ${(typeof accept === 'string') ? accept : (Array.isArray(accept)) ? accept.toString() : accept} ${i18n.translateThis("extension to import. Please choose a file with that extension.", i18n.localize.fileUpload.invalidType2)}`;
-                // const fileToLargeMsg = `${i18n.translateThis('File is larger than', i18n.localize.fileUpload.fileToLarge)} ${maxSize} bytes`;
-                // fileRejections.forEach((rejection) => {
-                //     const fileName = rejection.file.name;
-
-                //     console.log(rejection);
-                //     rejection.errors.forEach((error) => {
-                //         const dropzoneMsg = (error.code === 'file-invalid-type') ? invalidTypeMsg : (error.code === 'file-too-large') ? fileToLargeMsg : error.message;
-                //        message.createError(`${fileName}: ${dropzoneMsg}`, { append: true })
-                //     });
-                // })
+                const invalidTypeMsg = `When importing, you must choose a file with a ${(typeof accept === 'string') ? accept : (Array.isArray(accept)) ? accept.toString() : accept} extension to import. Please choose a file with that extension.`;
+                const fileToLargeMsg = `File is larger than ${maxSize} bytes`;
+                fileRejections.forEach((rejection) => {
+                    const fileName = rejection.file.name;
+                    rejection.errors.forEach((error) => {
+                        const dropzoneMsg = (error.code === 'file-invalid-type') ? invalidTypeMsg : (error.code === 'file-too-large') ? fileToLargeMsg : error.message;
+                        const msg = `${fileName}: ${dropzoneMsg}`
+                    });
+                })
             }
         }
     }, [fileRejections]);
 
     return (
         <>
+            <div className={'d-flex flex-column'}>
+                <DottedCard onClick={onClick} className={'px-3'}>
+                    <div className={`d-flex flex-column align-items-center py-3 ${(disabled) ? styles.noCursor : ''}`} {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        <i className={`fa-solid fa-cloud-arrow-up ${styles.icon} ${(disabled) ? styles.disabled : ''}`}></i>
+                        {
+                            (isDragActive) ?
+                                <p className={`pt-2 mb-0 ${styles.text}`}>
+                                    Upload File.
+                                </p> :
+                                <p className={`pt-2 mb-0 ${styles.text}`}>
+                                    Drag or Click to upload files.
+                                </p>
+                        }
+                        <div className={'d-flex'}>
+                            {
+                                (maxFiles > 1) ?
+                                    <p className={`mb-0 me-2 ${styles.text}`}><small><i>
+                                        Upload Limit: {maxFiles}</i>
+                                    </small></p> : null
+                            }
 
-            {/* <DottedCard noHover={(disabled) ? true : false} onClick={onClick}> */}
-            <div className={`d-flex flex-column align-items-center py-4 ${(disabled) ? styles.noCursor : ''}`} {...getRootProps()}>
-                <input {...getInputProps()} />
-                <i className={`fa-solid fa-cloud-arrow-up text-primary ${styles.icon} ${(disabled) ? styles.disabled : ''}`}></i>
-                {
-                    (isDragActive) ?
-                        <p className={`pt-2 mb-0 ${styles.text}`}>
-                            Upload File.
-                        </p> :
-                        <p className={`pt-2 mb-0 ${styles.text}`}>
-                            Drag or Click to upload files.
-                        </p>
-                }
-                <div className={'d-flex'}>
-                    {
-                        (maxFiles > 1) ?
                             <p className={`mb-0 me-2 ${styles.text}`}><small><i>
-                                Upload Limit: {maxFiles}</i>
-                            </small></p> : null
-                    }
+                                Max File Size: {(maxSize / 1000000)} MB</i></small>
+                            </p>
+                            {
+                                (typeof accept === 'string') ?
+                                    <p className={`p-2 mb-0 ${styles.text}`}><small><i>File Types:{accept}.</i></small></p> :
+                                    (typeof accept === 'object') ?
+                                        <p className={`mb-0 ${styles.text}`} ><small><i>
+                                            File Types: {(accept as any)?.map((type: any, index: number) => (<span key={index}>{type} </span>))}
+                                            .</i></small></p> : <p className={`p-2 mb-0 ${styles.text}`} ><small><i>
 
-                    <p className={`mb-0 me-2 ${styles.text}`}><small><i>
-                        Max File Size: {(maxSize / 1000000)} MB</i></small>
-                    </p>
-                    {/* {
-                            (typeof accept === 'string') ?
-                                <p className={`p-2 mb-0 ${styles.text}`}><small><i>File Types:{accept}.</i></small></p> :
-                                (typeof accept === 'object') ?
-                                    <p className={`mb-0 ${styles.text}`} ><small><i>
-                                        File Types: {accept.map((type, index) => (<span key={index}>{type} </span>))}
-                                        .</i></small></p> : <p className={`p-2 mb-0 ${styles.text}`} ><small><i>
+                                                All files accepted.
 
-                                            All files accepted.
+                                            </i></small></p>
+                            }
 
-                                        </i></small></p>
-                        } */}
-
-                </div>
-                {/* {
-                        (acceptedFiles.length > 1) ?
-                            <Button variant={'bg-none'} className={`mt-2 py-1 px-1 ${styles.clearBtn}`} onClick={(e: React.PointerEvent) => {
-                                e.stopPropagation()
-                                setAcceptedFiles([]);
-                            }}><Translate i18n={i18n.localize.upload.clearAll}>Clear All</Translate></Button> : null
-                    } */}
-
+                        </div>
+                        {
+                            (acceptedFiles.length > 1) ?
+                                <Button variant={'bg-none'} className={`mt-2 py-1 px-1 ${styles.clearBtn}`} onClick={(e: React.MouseEvent) => {
+                                    e.stopPropagation()
+                                    setAcceptedFiles([]);
+                                }}>Clear All</Button> : null
+                        }
+                    </div>
+                </DottedCard>
                 <div className={'pt-1'}>
                     {
                         acceptedFiles.map((file) => {
@@ -160,22 +160,25 @@ export default function Upload({ multiple, variant, accept, maxFiles: _maxFiles,
                             const truncatedName = file.name.substring(0, 25);
                             return (
                                 <React.Fragment key={id}>
-                                    {/* <Card variant={(variant === 'light') ? 'light' : (variant === 'white') ? 'white' : 'light'} className={'mt-2'} noHover onClick={(e: React.PointerEvent) => e.stopPropagation()}>
-                                            <div className={'d-flex align-items-center justify-content-between px-2'}>
-                                                <p className={'p-2 mb-0'}>
-                                                    <i className={`fa-solid fa-trash-can text-danger cursor ${styles.remove} me-2`} onClick={() => setAcceptedFiles(acceptedFiles.filter((file) => `${(file as any).path}-${file.size}-${file.name}` !== id))}></i>
-                                                    <small><i>{(file.name.length !== truncatedName.length) ? `${truncatedName}...` : truncatedName}</i></small>
-                                                </p>
-                                                <p className={'p-2 mb-0'}><small><i>{size} MB</i></small></p>
+                                    <Card className={'mt-2'} onClick={(e: React.MouseEvent) => e.stopPropagation()}>
+                                        <div className={'d-flex align-items-center justify-content-between px-2'}>
+                                            <p className={'p-2 mb-0'}>
+                                                <small><i>{(file.name.length !== truncatedName.length) ? `${truncatedName}...` : truncatedName}</i></small>
+                                            </p>
+                                            <div className={'d-flex align-items-center'}>
+                                                <p className={'mb-0 pe-4'}><small><i>{size} MB</i></small></p>
+                                                <i className={`fa-solid fa-minus-circle text-danger cursor ${styles.remove}`} onClick={() => setAcceptedFiles(acceptedFiles.filter((file) => `${(file as any).path}-${file.size}-${file.name}` !== id))}></i>
                                             </div>
-                                        </Card> */}
+
+                                        </div>
+                                    </Card>
                                 </React.Fragment>
                             )
                         })
                     }
                 </div>
             </div>
-            {/* </DottedCard> */}
+
         </>
     )
 }

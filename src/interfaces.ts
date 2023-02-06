@@ -1,4 +1,22 @@
 //import { IInputItem } from "./components/atoms/InputItem";
+
+export interface IFormData {
+    controlData: IForm.ControlData[];
+    updatedControlData: IForm.ControlData[];
+    missingData: {
+        total: number;
+        required: number;
+        noInput: number;
+        highlighted: number;
+        formGroups: {
+            name: string,
+            total: number;
+            required: number;
+            noInput: number;
+            highlighted: number;
+        }[]
+    };
+}
 declare namespace IForm {
 
     export type ControlType = 'control' | 'date' | 'dateRange' | 'time' | 'year' | 'checkbox' | 'countryCode' | 'email' | 'hazmat' | 'inbond' | 'number' | 'phone' | 'radio' | 'search' | 'select' | 'suggest' | 'switch' | 'textarea' | 'text';
@@ -27,24 +45,7 @@ declare namespace IForm {
         missingCount: number;
     }
 
-    export interface FormData {
-        controlData: ControlData[];
-        updatedControlData: ControlData[];
-        missingData: {
-            total: number;
-            required: number;
-            noInput: number;
-            highlighted: number;
-            formGroups: {
-                name: string,
-                total: number;
-                required: number;
-                noInput: number;
-                highlighted: number;
-            }[]
-        };
-    }
+    export interface FormData extends IFormData { }
 
 }
-
 export default IForm;

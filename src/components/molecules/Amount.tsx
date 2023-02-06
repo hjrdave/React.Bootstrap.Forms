@@ -7,6 +7,7 @@ interface Props {
     hideLabel?: boolean;
     min?: number;
     max?: number;
+    value?: number;
 };
 
 export default function Amount(props: Props) {
