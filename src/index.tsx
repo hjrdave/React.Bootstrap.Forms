@@ -7,6 +7,7 @@ import Radio from './components/molecules/Radio';
 import NumberInput from './components/molecules/Number';
 import Amount from './components/molecules/Amount';
 import Upload from './components/molecules/Upload';
+import ToolTip from './components/atoms/ToolTip';
 // import TextArea from './components/molecules/TextArea';
 // import Phone from './components/molecules/Phone';
 // import Email from './components/molecules/Email';
@@ -44,6 +45,7 @@ export interface IForm {
     RadioGroup: typeof RadioGroup;
     FormList: typeof FormList;
     Text: typeof Text;
+    ToolTip: typeof ToolTip;
     useForm: typeof usePublicForm;
     useUpload: typeof useUpload;
 }
@@ -55,6 +57,7 @@ Form.Radio = Radio;
 Form.Number = NumberInput;
 Form.Amount = Amount;
 Form.Upload = Upload;
+Form.ToolTip = ToolTip;
 // Form.TextArea = TextArea;
 // Form.Phone = Phone;
 // Form.Email = Email;

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Dropdown, SplitButton } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import InputPrependList from '../InputPrependList';
 import styles from './FormControl.module.scss';
-//import ToolTip from '../tool-tip';
+import ToolTip from '../ToolTip';
 
 export interface Props {
     name: string;
@@ -58,7 +58,7 @@ export default function FormControl({ hideLabel, name, caption, className, disab
     const controlID = name;
 
     const label = (required) ? `${_label}*` : _label;
-    // const CustomToolTip = () => (<ToolTip className={`${styles.toolTip} ms-2`} overlay={toolTip} />);
+    const CustomToolTip = () => (<ToolTip className={`${styles.toolTip} ms-2`} overlay={toolTip} />);
     const onClickFN = (e: React.MouseEvent) => {
         e.preventDefault();
         if (onClick) {
@@ -80,7 +80,7 @@ export default function FormControl({ hideLabel, name, caption, className, disab
 
                     <Form.Check
                         type={type}
-                        label={(React.isValidElement(_label)) ? _label : <>{_label}{(toolTip) ? 'tooltip' : null}</>}
+                        label={(React.isValidElement(_label)) ? _label : <>{_label}{(toolTip) ? <CustomToolTip /> : null}</>}
                         onChange={onChange}
                         onFocus={onFocus}
                         checked={checked}
@@ -97,7 +97,7 @@ export default function FormControl({ hideLabel, name, caption, className, disab
                     /> :
                     <Form.Group controlId={controlID} className={className}>
                         {
-                            (label && !hideLabel) ? <Form.Label>{label} {(toolTip) ? '' : null}</Form.Label> : null
+                            (label && !hideLabel) ? <Form.Label>{label} {(toolTip) ? <CustomToolTip /> : null}</Form.Label> : null
                         }
                         <InputGroup hasValidation className={`${styles.inputGroup}`}>
                             <>
@@ -146,9 +146,6 @@ export default function FormControl({ hideLabel, name, caption, className, disab
                                                 </Form.Control>
                                             </Dropdown.Toggle> :
                                             <>
-                                                {/* {
-                                                    (enablePrependDropdown) ? <InputPrependList size={'sm'} title={'Title'} /> : null
-                                                } */}
                                                 <Form.Control
                                                     ref={forwardRef}
                                                     as={as}
@@ -193,7 +190,7 @@ export default function FormControl({ hideLabel, name, caption, className, disab
                                     {
                                         (invalidFeedback) ?
 
-                                            <Form.Control.Feedback type="invalid" tooltip className={'styles.invalidToolTip'}>
+                                            <Form.Control.Feedback type="invalid" tooltip className={styles.invalidToolTip}>
                                                 {invalidFeedback}
                                             </Form.Control.Feedback> : null
                                     }
