@@ -37,6 +37,7 @@ export default function NumberInput({ className, onChange, readOnly, name, label
     const [defaultValue] = React.useState((typeof _value === 'number') ? (number.isInRange(_value, [min, max])) ? number.trimFloat(number.convertToNum(_value), float) : "0" : "0");
     const { value, bind, reset, setValue } = useInput(defaultValue);
     const [controlValue, setControlValue] = React.useState<string | number>(defaultValue);
+    const [selectedCurrencyCode, setSelectedCurrencyCode] = React.useState<{ value?: string; text?: string }>({ value: 'USD', text: 'USD' });
     //const highlightDanger = (highlightMissing && Number(controlValue) === 0) ? true : false;
     const isInStep = (typeof step === 'string') ? true : ((typeof step === 'number') && ((value % step) === 0)) ? true : false;
     const isInRange = number.isInRange(value, [min, max]);
@@ -69,7 +70,7 @@ export default function NumberInput({ className, onChange, readOnly, name, label
         name: name,
         label: label,
         formGroup: formGroup.groupName,
-        data: { value: Number(controlValue), text: label },
+        data: { value: Number(controlValue), text: label, currencyCode: selectedCurrencyCode.value },
         required: (required) ? true : false,
         validation: form.generateValidationInfo({ type: controlType, isRequired: required, controlValue: Number(controlValue), max: max, min: min, highlighted: false, step: step }),
         updated: isControlUpdated
@@ -102,7 +103,7 @@ export default function NumberInput({ className, onChange, readOnly, name, label
     useNonInitialEffect(() => {
         setIsControlUpdate(true);
         form.editFormData({ ...controlData, updated: true });
-    }, [controlValue]);
+    }, [controlValue, selectedCurrencyCode.value]);
 
     //update value from outside of comp
     useNonInitialEffect(() => {
@@ -127,8 +128,6 @@ export default function NumberInput({ className, onChange, readOnly, name, label
     React.useEffect(() => {
         feedback.checkRange(value, min, max);
     }, [value]);
-
-    const [selectedCurrencyCode, setSelectedCurrencyCode] = React.useState<{ value?: string; text?: string }>({ value: 'USD', text: 'USD' });
 
     return (
         <>

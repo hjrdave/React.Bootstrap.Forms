@@ -44,10 +44,6 @@ function FormListComp({ className, as: CustomRow, data: _data, defaultData, onCh
     const { listData, setListData } = useFormList((_data) ? _data : defaultRows);
     const canAddRows = max === undefined || listData.length < max;
 
-    React.useEffect(() => {
-        console.log(listData)
-    }, [listData]);
-
     function areEqualShallow(a: any, b: any) {
         for (var key in a) {
             if (a[key] !== b[key]) {

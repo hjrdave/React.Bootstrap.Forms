@@ -39,7 +39,8 @@ export default function InputPrependList({ title, id, size, onChange, items, cla
                         items?.map((item, index) => (
                             <React.Fragment key={index}>
                                 <Dropdown.Item
-                                    itemClassName={itemClassName}
+                                    active={(selectedItem?.value === item.value)}
+                                    className={itemClassName}
                                     onClick={() => setSelectedItem(item)}
                                 >
                                     {item.text}
