@@ -1,0 +1,9 @@
+.compContainer{
+    :global(.btn) {
+            border-radius: .375rem 0rem 0rem .375rem !important;
+        }
+    :global(.dropdown-toggle-split) {
+        border-radius: 0rem !important;
+    }
+}
+

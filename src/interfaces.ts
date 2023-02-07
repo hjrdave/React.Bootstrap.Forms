@@ -19,7 +19,7 @@ export interface IFormData {
 }
 declare namespace IForm {
 
-    export type ControlType = 'control' | 'date' | 'dateRange' | 'time' | 'year' | 'checkbox' | 'countryCode' | 'email' | 'hazmat' | 'inbond' | 'number' | 'phone' | 'radio' | 'search' | 'select' | 'suggest' | 'switch' | 'textarea' | 'text';
+    export type ControlType = 'control' | 'date' | 'dateRange' | 'time' | 'year' | 'checkbox' | 'countryCode' | 'email' | 'hazmat' | 'inbond' | 'number' | 'phone' | 'radio' | 'search' | 'select' | 'suggest' | 'switch' | 'textarea' | 'text' | 'amount';
 
     //export type InputItem = IInputItem.Item | { [key: string]: any }
     export type ValidationCode = 'required' | 'minMax' | 'min' | 'max' | 'invalidDateRange' | 'noSpecialChars' | 'noSpecialCharsExcept' | 'increment' | 'isValid';

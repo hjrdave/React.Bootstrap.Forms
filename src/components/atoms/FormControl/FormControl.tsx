@@ -1,7 +1,8 @@
 import React from 'react';
-import { Dropdown } from 'react-bootstrap';
+import { Dropdown, SplitButton } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import InputPrependList from '../InputPrependList';
 import styles from './FormControl.module.scss';
 //import ToolTip from '../tool-tip';
 
@@ -98,17 +99,19 @@ export default function FormControl({ hideLabel, name, caption, className, disab
                         {
                             (label && !hideLabel) ? <Form.Label>{label} {(toolTip) ? '' : null}</Form.Label> : null
                         }
-                        <InputGroup hasValidation className={styles.inputGroup}>
+                        <InputGroup hasValidation className={`${styles.inputGroup}`}>
                             <>
+
                                 {
                                     (icon) ? <InputGroup.Text id={`${controlID}_icon`} className={styles.inputGroupText}>{icon}</InputGroup.Text> : null
                                 }
 
-                                <div style={{ display: 'flex', flexWrap: 'wrap', width: icon ? "calc(100% - 35px)" : "100%" }} className={(icon) ? styles.hasIcon : ''}>
+                                <div style={{ display: 'flex'/*, flexWrap: 'wrap'*/, width: icon ? "calc(100% - 35px)" : "100%" }} className={(icon) ? styles.hasIcon : ''}>
 
                                     {
                                         (enableDropdownToggle) ?
                                             <Dropdown.Toggle as={'div'} style={{ width: "100%" }}>
+
                                                 <Form.Control
                                                     ref={forwardRef}
                                                     as={as}
@@ -142,38 +145,44 @@ export default function FormControl({ hideLabel, name, caption, className, disab
                                                     {children}
                                                 </Form.Control>
                                             </Dropdown.Toggle> :
-                                            <Form.Control
-                                                ref={forwardRef}
-                                                as={as}
-                                                defaultValue={defaultValue}
-                                                value={value}
-                                                placeholder={placeHolder}
-                                                onClick={onClickFN}
-                                                onKeyDown={(e) => { if (e.keyCode == 13 || e.key === 'Enter') { e.preventDefault(); return false }; if (onKeyDown) { onKeyDown(e) } }}
-                                                onChange={onChangeFN}
-                                                onFocus={onFocus}
-                                                onFocusCapture={onFocusCapture}
-                                                type={(type) ? type : 'text'}
-                                                required={required}
-                                                disabled={disabled}
-                                                readOnly={readOnly}
-                                                size={'sm'}
-                                                isValid={isValid}
-                                                isInvalid={isInvalid}
-                                                min={min}
-                                                max={max}
-                                                step={step}
-                                                rows={rows}
-                                                pattern={pattern}
-                                                maxLength={(maxlength) ? maxlength : 255}
-                                                className={`${(caretDown ? `${styles.textboxBorderCaretDown}` : `${styles.textboxNoBorderCaretDown}`)} ${(highlightDanger) ? styles.highlightDanger : ''} ${controlClassName}`}
-                                                autoComplete={autoComplete}
-                                                onInput={onInput}
-                                                autoFocus={autoFocus}
-                                                tabIndex={tabIndex}
-                                            >
-                                                {children}
-                                            </Form.Control>
+                                            <>
+                                                {/* {
+                                                    (enablePrependDropdown) ? <InputPrependList size={'sm'} title={'Title'} /> : null
+                                                } */}
+                                                <Form.Control
+                                                    ref={forwardRef}
+                                                    as={as}
+                                                    defaultValue={defaultValue}
+                                                    value={value}
+                                                    placeholder={placeHolder}
+                                                    onClick={onClickFN}
+                                                    onKeyDown={(e) => { if (e.keyCode == 13 || e.key === 'Enter') { e.preventDefault(); return false }; if (onKeyDown) { onKeyDown(e) } }}
+                                                    onChange={onChangeFN}
+                                                    onFocus={onFocus}
+                                                    onFocusCapture={onFocusCapture}
+                                                    type={(type) ? type : 'text'}
+                                                    required={required}
+                                                    disabled={disabled}
+                                                    readOnly={readOnly}
+                                                    size={'sm'}
+                                                    isValid={isValid}
+                                                    isInvalid={isInvalid}
+                                                    min={min}
+                                                    max={max}
+                                                    step={step}
+                                                    rows={rows}
+                                                    pattern={pattern}
+                                                    maxLength={(maxlength) ? maxlength : 255}
+                                                    className={`${(caretDown ? `${styles.textboxBorderCaretDown}` : `${styles.textboxNoBorderCaretDown}`)} ${(highlightDanger) ? styles.highlightDanger : ''} ${controlClassName}`}
+                                                    autoComplete={autoComplete}
+                                                    onInput={onInput}
+                                                    autoFocus={autoFocus}
+                                                    tabIndex={tabIndex}
+                                                >
+                                                    {children}
+                                                </Form.Control>
+                                            </>
+
                                     }
 
                                     {(caretDown) &&
