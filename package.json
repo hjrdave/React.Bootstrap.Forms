@@ -1,14 +1,14 @@
 {
   "name": "@mediafishio/react-bootstrap-forms",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "description": "Advanced Form Components built on React Bootstrap",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
   "scripts": {
-    "start": "babel src --watch --out-dir lib --extensions .ts,.tsx --source-maps inline --copy-files",
-    "clean": "rimraf lib",
-    "build": "babel src --out-dir lib --extensions .ts,.tsx --source-maps inline --copy-files && tsc --declaration --emitDeclarationOnly",
+    "start": "babel src --watch --out-dir build --extensions .ts,.tsx --source-maps inline --copy-files",
     "tsc:watch": "tsc --watch --emitDeclarationOnly",
+    "build": "babel src --out-dir build --extensions .ts,.tsx --source-maps inline --copy-files && tsc --declaration --emitDeclarationOnly",
+    "clean": "rimraf build",
     "npm:install": "npm install --legacy-peer-deps"
   },
   "repository": {
