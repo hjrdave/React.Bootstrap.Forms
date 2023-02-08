@@ -21,8 +21,9 @@ interface Props {
     tabIndex?: number;
     onChange?: (value: any) => void;
     onFocus?: React.FocusEventHandler<any>;
+    currencyCodes?: { text: string, value: string }[]
 }
-export default function NumberInput({ className, onChange, readOnly, name, label, required, value: _value, max, min, tabIndex: _tabIndex, ...props }: Props) {
+export default function NumberInput({ className, onChange, readOnly, name, label, required, value: _value, max, min, tabIndex: _tabIndex, currencyCodes, ...props }: Props) {
 
     const number = useNumber();
     const string = useString();
@@ -136,13 +137,7 @@ export default function NumberInput({ className, onChange, readOnly, name, label
                     title={selectedCurrencyCode.text}
                     size={'sm'}
                     onChange={(selectedItem) => setSelectedCurrencyCode(selectedItem)}
-                    items={[
-                        { value: 'USD', text: 'USD' },
-                        { value: 'EUR', text: 'EUR' },
-                        { value: 'JPY', text: 'JPY' },
-                        { value: 'GBP', text: 'GBP' },
-                        { value: 'CHF', text: 'CHF' }
-                    ]}
+                    items={currencyCodes}
                 />
                 <FormControl
                     {...props}

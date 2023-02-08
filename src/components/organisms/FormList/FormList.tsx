@@ -19,9 +19,9 @@ interface Props {
     }) => JSX.Element;
     data?: {
         Id: string | number,
-        [key: string]: any
+        [key: string]: any;
     }[];
-    defaultData?: { [key: string]: any };
+    forwardProps?: { [key: string]: any };
     defaultRowCount?: number;
     noFirstRowDelete?: boolean;
     onAdd?: () => void;
@@ -38,7 +38,7 @@ interface Props {
     max?: number;
 };
 
-function FormListComp({ className, as: CustomRow, data: _data, defaultData, onChange: _onChange, onDelete: _onDelete, onAdd: _onAdd, addBtnLabel, addBtnIcon, noFirstRowDelete, children, tabIndex, max, defaultRowCount, ...props }: Props) {
+function FormListComp({ className, as: CustomRow, data: _data, forwardProps, onChange: _onChange, onDelete: _onDelete, onAdd: _onAdd, addBtnLabel, addBtnIcon, noFirstRowDelete, children, tabIndex, max, defaultRowCount, ...props }: Props) {
 
     const defaultRows = (defaultRowCount) ? Array.from({ length: defaultRowCount }, (_, i) => ({ Id: uniqid() })) : (noFirstRowDelete) ? [{ Id: uniqid() }] : [];
     const { listData, setListData } = useFormList((_data) ? _data : defaultRows);
@@ -71,8 +71,7 @@ function FormListComp({ className, as: CustomRow, data: _data, defaultData, onCh
 
     const onAdd = () => {
         if (canAddRows) {
-            const updatedList = [...listData, { Id: uniqid(), ...defaultData }];
-            console.log(updatedList)
+            const updatedList = [...listData, { Id: uniqid(), ...forwardProps }];
             if (_onAdd) {
                 _onAdd();
             }
@@ -138,7 +137,7 @@ function FormListComp({ className, as: CustomRow, data: _data, defaultData, onCh
                                             <>
                                                 <Row className={'pt-2 m-0'}>
                                                     <Col sm={11}>
-                                                        <CustomRow data={item} onChange={onChange} {...props} tabIndex={tabIndex} />
+                                                        <CustomRow {...forwardProps} data={{ index: index, ...item }} onChange={onChange} tabIndex={tabIndex} />
                                                     </Col>
                                                     <Col sm={1} className={'d-flex justify-content-start align-items-center'}>
                                                         {
