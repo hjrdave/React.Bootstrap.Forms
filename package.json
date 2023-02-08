@@ -1,7 +1,7 @@
 {
   "name": "@mediafishio/react-bootstrap-forms",
   "version": "1.0.0",
-  "description": "Advanced Form Components built on React Bootstrap",
+  "description": "Advanced Form Components built on React Bootstrap.",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "scripts": {
