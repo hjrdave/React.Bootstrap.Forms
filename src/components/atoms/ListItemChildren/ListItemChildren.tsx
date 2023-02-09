@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './ListItemChildren.module.scss';
 
 interface Props {
     children?: JSX.Element | JSX.Element[];
@@ -10,7 +9,7 @@ export default function ListItemChildren({ children, className }: Props) {
 
     return (
         <>
-            <div className={`${styles.compContainer} ${className}`}>
+            <div className={`${className}`} style={{ width: '100%' }}>
                 {children}
             </div>
         </>
