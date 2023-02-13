@@ -464,6 +464,8 @@ const useForm = () => {
         Store.update(Util.actions.setIsSubmitBtnDisabled, isDisabled);
     }
 
+
+
     return {
         reset,
         resetTrigger,
@@ -496,14 +498,15 @@ export const usePublicForm = () => {
         readOnly,
         loading,
         groupNames,
-        formData
+        controlData
     } = useForm();
+
     return {
         reset,
         readOnly,
         loading,
         groupNames,
-        formData
+        controlData
     }
 }
 

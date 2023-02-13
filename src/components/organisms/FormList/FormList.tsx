@@ -13,12 +13,11 @@ interface Props {
     addBtnIcon?: JSX.Element;
     addBtnLabel?: string;
     as: (props: {
-        data: { Id: string | number, [key: string]: any };
+        data: { [key: string]: any };
         onChange: (data: { [key: string]: any }) => void;
         [key: string]: any;
     }) => JSX.Element;
     data?: {
-        Id: string | number,
         [key: string]: any;
     }[];
     forwardProps?: { [key: string]: any };
@@ -26,11 +25,11 @@ interface Props {
     noFirstRowDelete?: boolean;
     onAdd?: () => void;
     onDelete?: (dataToDelete?: {
-        Id: string | number,
+        RBSKey: number,
         [key: string]: any,
     }) => void;
     onChange?: (data: {
-        Id: string | number,
+        RBSKey: number,
         [key: string]: any
     }[]) => void;
     children?: JSX.Element | JSX.Element[];
@@ -40,8 +39,11 @@ interface Props {
 
 function FormListComp({ className, as: CustomRow, data: _data, forwardProps, onChange: _onChange, onDelete: _onDelete, onAdd: _onAdd, addBtnLabel, addBtnIcon, noFirstRowDelete, children, tabIndex, max, defaultRowCount, ...props }: Props) {
 
-    const defaultRows = (defaultRowCount) ? Array.from({ length: defaultRowCount }, (_, i) => ({ Id: uniqid() })) : (noFirstRowDelete) ? [{ Id: uniqid() }] : [];
-    const { listData, setListData } = useFormList((_data) ? _data : defaultRows);
+    const defaultRows = (defaultRowCount) ? Array.from({ length: defaultRowCount }, (_, i) => ({ RBSKey: i })) : (noFirstRowDelete) ? [{ RBSKey: 1 }] : [];
+    //This is used to generate keys for list items so deleted rows will persist correctly (RBSKey)
+    const [RBSKeyArray, setRBSKeyArray] = React.useState<number[]>((_data) ? _data.map((_, index) => (index + 1)) : defaultRows.map((item) => item.RBSKey));
+
+    const { listData, setListData } = useFormList((_data) ? _data.map((item, index) => ({ RBSKey: index, ...item })) : defaultRows);
     const canAddRows = max === undefined || listData.length < max;
 
     function areEqualShallow(a: any, b: any) {
@@ -55,7 +57,7 @@ function FormListComp({ className, as: CustomRow, data: _data, forwardProps, onC
 
     const onChange = (data: { [key: string]: any }) => {
 
-        const updatedList = listData.map((item) => ((item.Id === data.Id) ? data : item));
+        const updatedList = listData.map((item) => ((item.RBSKey === data.RBSKey) ? data : item));
         let isDifferent: boolean = false;
         for (let i = 0; i < listData.length; i++) {
             if (!(areEqualShallow(listData[i], updatedList[i]))) {
@@ -71,28 +73,28 @@ function FormListComp({ className, as: CustomRow, data: _data, forwardProps, onC
 
     const onAdd = () => {
         if (canAddRows) {
-            const updatedList = [...listData, { Id: uniqid(), ...forwardProps }];
+            const updatedList = [...listData, { RBSKey: RBSKeyArray[RBSKeyArray.length - 1] + 1, ...forwardProps }];
             if (_onAdd) {
                 _onAdd();
             }
+            setRBSKeyArray([...RBSKeyArray, RBSKeyArray[RBSKeyArray.length - 1] + 1]);
             setListData(updatedList);
         }
 
     }
 
     const onDelete = (Id: string | number) => {
-        const updatedList = listData.filter((item) => item.Id !== Id);
+        const updatedList = listData.filter((item) => item.RBSKey !== Id);
         if (_onDelete) {
-            const itemToDelete = listData.filter((item) => item.Id === Id)[0];
-            _onDelete(itemToDelete);
+            const itemToDelete = listData.filter((item) => item.RBSKey === Id)[0];
+            _onDelete(itemToDelete as any);
         }
-        console.log(Id);
         setListData(updatedList);
     }
 
     useNonInitialEffect(() => {
         if (_onChange) {
-            _onChange(listData);
+            _onChange(listData as any);
         };
     }, [listData]);
 
@@ -133,11 +135,11 @@ function FormListComp({ className, as: CustomRow, data: _data, forwardProps, onC
                                 listData.map((item, index) => {
 
                                     return (
-                                        <React.Fragment key={item.Id}>
+                                        <React.Fragment key={item.RBSKey}>
                                             <>
                                                 <Row className={'pt-2 m-0'}>
                                                     <Col sm={11}>
-                                                        <CustomRow {...forwardProps} data={{ index: index, ...item }} onChange={onChange} tabIndex={tabIndex} />
+                                                        <CustomRow {...forwardProps} data={{ index: item.RBSKey, ...item }} onChange={onChange} tabIndex={tabIndex} />
                                                     </Col>
                                                     <Col sm={1} className={'d-flex justify-content-start align-items-center'}>
                                                         {
@@ -145,7 +147,7 @@ function FormListComp({ className, as: CustomRow, data: _data, forwardProps, onC
                                                                 <i
                                                                     className="fa-solid fa-circle-minus text-danger"
                                                                     style={{ cursor: "pointer" }}
-                                                                    onClick={() => onDelete(item.Id)}
+                                                                    onClick={() => onDelete(item.RBSKey)}
                                                                     tabIndex={tabIndex}
                                                                 ></i>
                                                         }

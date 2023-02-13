@@ -22,7 +22,7 @@ import RadioGroup from './components/organisms/RadioGroup';
 import FormList from './components/organisms/FormList';
 // import Year from './components/molecules/Year';
 import useUpload from './hooks/use-upload';
-import { usePublicForm } from './use-form';
+import useForm, { usePublicForm } from './use-form';
 
 export interface IForm {
     (props: Props): JSX.Element;
