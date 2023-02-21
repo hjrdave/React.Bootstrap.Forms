@@ -27,8 +27,8 @@
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-react": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
-    "@types/react": "^18.0.26",
-    "@types/react-dom": "^18.0.9",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
     "@types/uniqid": "^5.3.2",
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-minify-dead-code-elimination": "^0.5.1",
@@ -54,7 +54,7 @@
     "react-cork": "^1.0.0-alpha.30",
     "react-dropzone": "^12.0.4",
     "react-dropzone-uploader": "^2.11.0",
-    "treble-gsm": "^4.0.7",
+    "treble-gsm": "^4.1.8",
     "treble-list-manager": "^1.0.0-beta.2",
     "uniqid": "^5.4.0"
   }

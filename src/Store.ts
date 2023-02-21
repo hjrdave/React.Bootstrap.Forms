@@ -1,4 +1,5 @@
-import { useScopedTreble, createStore, useTreble, TrebleGSM } from 'treble-gsm';
+import React from 'react';
+import { createStore, useTreble, TrebleGSM, createScopedTreble } from 'treble-gsm';
 import TrebleListManager, { TrebleLM } from 'treble-list-manager';
 import IForm from './interfaces';
 
@@ -23,7 +24,8 @@ const actionKeys = {
 type TStoreActions = typeof actionKeys;
 export interface IUtilities extends TrebleGSM.Utilities<TStoreActions> { };
 export interface IDispatchers extends TrebleGSM.Dispatchers, TrebleLM.Dispatchers { };
-const useFormProvider = () => useTreble<IStoreItems, IDispatchers, IUtilities>();
+const FormContext = createScopedTreble();
+const useFormProvider = () => useTreble<IStoreItems, IDispatchers, IUtilities>(FormContext);
 
 const Store = createStore([
     {
@@ -81,6 +83,7 @@ const Store = createStore([
         }
     },
 ], {
+    context: FormContext,
     modules: [TrebleListManager]
 });
 

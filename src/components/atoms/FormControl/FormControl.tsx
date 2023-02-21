@@ -97,7 +97,7 @@ export default function FormControl({ hideLabel, name, caption, className, disab
                     /> :
                     <Form.Group controlId={controlID} className={className}>
                         {
-                            (label && !hideLabel) ? <Form.Label>{label} {(toolTip) ? <CustomToolTip /> : null}</Form.Label> : null
+                            (label && !hideLabel) ? <Form.Label>{label} {(required) ? '*' : ''} {(toolTip) ? <CustomToolTip /> : null}</Form.Label> : null
                         }
                         <InputGroup hasValidation className={`${styles.inputGroup}`}>
                             <>

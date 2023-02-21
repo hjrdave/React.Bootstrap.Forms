@@ -1,4 +1,6 @@
 import React from 'react';
+import { Form } from 'react-bootstrap';
+import ToolTip from '../../atoms/ToolTip';
 import FormControl from '../../atoms/FormControl';
 import InputPrependList from '../../atoms/InputPrependList';
 import { useInput, useNonInitialEffect, useCleanupEffect, useNumber, useString } from 'react-cork';
@@ -21,9 +23,12 @@ interface Props {
     tabIndex?: number;
     onChange?: (value: any) => void;
     onFocus?: React.FocusEventHandler<any>;
-    currencyCodes?: { text: string, value: string }[]
+    currencyCodes?: { text: string, value: string }[];
+    isValid?: boolean;
+    isInvalid?: boolean;
+    toolTip?: string | JSX.Element;
 }
-export default function NumberInput({ className, onChange, readOnly, name, label, required, value: _value, max, min, tabIndex: _tabIndex, currencyCodes, ...props }: Props) {
+export default function NumberInput({ className, onChange, readOnly, name, label, required, value: _value, max, min, tabIndex: _tabIndex, currencyCodes, toolTip, hideLabel, ...props }: Props) {
 
     const number = useNumber();
     const string = useString();
@@ -43,6 +48,7 @@ export default function NumberInput({ className, onChange, readOnly, name, label
     const isInStep = (typeof step === 'string') ? true : ((typeof step === 'number') && ((value % step) === 0)) ? true : false;
     const isInRange = number.isInRange(value, [min, max]);
     const tabIndex = (_tabIndex) ? _tabIndex : (form.controlData.findIndex((control) => (control.name === name)) + 1);
+    const CustomToolTip = () => (<ToolTip className={`${styles.toolTip} ms-2`} overlay={toolTip} />);
 
     type TFormatValue = (value: string) => string;
     const formatValue: TFormatValue = (value) => {
@@ -132,6 +138,10 @@ export default function NumberInput({ className, onChange, readOnly, name, label
 
     return (
         <>
+            {
+                (!hideLabel) ?
+                    <Form.Label>{label} {(required) ? '*' : ''} {(toolTip) ? <CustomToolTip /> : null}</Form.Label> : null
+            }
             <div className={`d-flex ${className || ''}`}>
                 <InputPrependList
                     title={selectedCurrencyCode.text}
@@ -147,6 +157,7 @@ export default function NumberInput({ className, onChange, readOnly, name, label
                     name={name}
                     required={required}
                     label={label}
+                    hideLabel
                     readOnly={isReadOnly}
                     disabled={isReadOnly}
                     type={'number'}
