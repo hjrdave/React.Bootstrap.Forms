@@ -1,0 +1,56 @@
+
+.compContainer {
+    &:focus {
+        outline: none !important;
+    }
+
+    :global(.DayPicker-wrapper) {
+        &:focus {
+            outline: none !important;
+        }
+
+        :global(.DayPicker-Day--disabled) {
+            pointer-events: none !important;
+        }
+
+        :global(.DayPicker-Day--today) {
+            color: $blue;
+        }
+
+        :global(.DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside)) {
+            background-color: #f0f8ff !important;
+            color: #4a90e2;
+        }
+
+        :global(.DayPicker-Day) {
+            border-radius: 0% !important;
+        }
+
+        :global(.DayPicker-Day--start) {
+            border-top-left-radius: 50% !important;
+            border-bottom-left-radius: 50% !important;
+        }
+
+        :global(.DayPicker-Day--end) {
+            border-top-right-radius: 50% !important;
+            border-bottom-right-radius: 50% !important;
+        }
+
+        :global(.DayPicker-Caption) {
+            select {
+                font-size: x-small;
+            }
+
+            select[name="month"] {
+                width: 30%;
+                float: left;
+                margin-right: 7px;
+            }
+
+            select[name="year"] {
+                width: 30%;
+                float: left;
+            }
+        }
+    }
+}
