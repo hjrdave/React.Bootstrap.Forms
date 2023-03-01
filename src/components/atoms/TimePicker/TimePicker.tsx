@@ -1,5 +1,5 @@
 import React from 'react';
-import useNonInitialEffect from 'react-cork/use-non-initial-effect';
+import useNonInitialEffect from 'react-cork/useNonInitialEffect';
 import useTimePicker from './useTimePicker';
 import styles from './timePicker.module.scss';
 

@@ -31,7 +31,7 @@ export default function DayPicker({ range, dateRange, selectedDay, modifiers, on
         <>
             <div className={`d-flex justify-content-center`}>
                 <div>
-                    <DayPickerComp
+                    {/* <DayPickerComp
                         weekdaysShort={weekdayShort}
                         month={month}
                         className={styles.compContainer}
@@ -41,7 +41,7 @@ export default function DayPicker({ range, dateRange, selectedDay, modifiers, on
                         onDayClick={onClick}
                         captionElement={({ date }: any) => ((CaptionElement) ? <CaptionElement date={date as any} onChange={handleYearMonthChange} /> : null)}
                         disabledDays={{ before: (initialDate ? initialDate as any : undefined) }}
-                    />
+                    /> */}
                     <div className="d-flex justify-content-start pb-2 px-2">
                         <Button
                             tabIndex={tabIndex}
