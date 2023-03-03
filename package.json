@@ -51,7 +51,7 @@
     "@fortawesome/fontawesome-free": "^6.2.1",
     "@types/react-dropzone": "^5.1.0",
     "react-bootstrap": "^2.7.0",
-    "react-cork": "^1.0.0-alpha.36",
+    "react-cork": "^1.0.0-alpha.38",
     "react-day-picker": "^8.6.0",
     "react-dropzone": "^12.0.4",
     "react-dropzone-uploader": "^2.11.0"

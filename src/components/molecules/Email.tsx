@@ -9,14 +9,19 @@ interface Props extends FormControlProps {
     value?: string;
 };
 
-export default function Email({ name, placeholder, pattern, onChange, value, debounceTime, ...props }: Props) {
+export default function Email({ name, placeholder, pattern, onChange, value, debounceTime, persist, ...props }: Props) {
 
     const controlId = 'email';
     const _name = name;
     const [_placeholder] = React.useState((placeholder ?? "Type email"));
     const defaultEmailRegex = pattern ?? new RegExp(/^\s*([^\s@]+)@([^\s@]+)\.([^\s@]+)\s*$/
     );
-    const { controlValue, setControlValue, bind } = useControlledInput(value, onChange, debounceTime);
+    const { controlValue, setControlValue, bind } = useControlledInput({
+        name: name,
+        inputValue: value,
+        onChange: onChange,
+        debounceTime: debounceTime
+    });
 
     useNonInitialEffect(() => {
         setControlValue(controlValue);

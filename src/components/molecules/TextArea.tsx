@@ -7,12 +7,17 @@ interface Props extends FormControlProps {
 
 };
 
-export default function TextArea({ value, name, required, onChange, debounceTime, ...props }: Props) {
+export default function TextArea({ value, name, required, onChange, debounceTime, persist, ...props }: Props) {
 
     const controlId = 'textarea';
     const _name = name;
     const [_value, _setValue] = React.useState(value);
-    const { controlValue, setControlValue, bind } = useControlledInput(value, onChange, debounceTime);
+    const { controlValue, setControlValue, bind } = useControlledInput({
+        name: name,
+        inputValue: value,
+        onChange: onChange,
+        debounceTime: debounceTime
+    });
 
     useNonInitialEffect(() => {
         setControlValue(controlValue);

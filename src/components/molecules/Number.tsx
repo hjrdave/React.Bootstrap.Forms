@@ -7,11 +7,16 @@ interface Props extends FormControlProps {
     defaultValue?: number;
 };
 
-export default function Number({ name, value, onChange, debounceTime, ...props }: Props) {
+export default function Number({ name, value, onChange, debounceTime, persist, ...props }: Props) {
 
     const controlId = 'number';
     const _name = name;
-    const { controlValue, setControlValue, bind } = useControlledInput(value, onChange, debounceTime);
+    const { controlValue, setControlValue, bind } = useControlledInput({
+        name: name,
+        inputValue: value,
+        onChange: onChange,
+        debounceTime: debounceTime
+    });
 
     useNonInitialEffect(() => {
         setControlValue(controlValue);
