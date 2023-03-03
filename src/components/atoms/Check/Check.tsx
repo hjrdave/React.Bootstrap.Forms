@@ -6,7 +6,10 @@ export default function Check(props: CheckProps) {
 
     return (
         <>
-            <Form.Check {...props} />
+            <Form.Check
+                {...props}
+                onChange={(e: any) => props.onChange?.(e)}
+            />
         </>
     )
 }

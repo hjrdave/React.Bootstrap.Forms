@@ -20,4 +20,5 @@ export default interface FormControlProps extends IForm.BaseControlProps {
     min?: number;
     max?: number;
     rows?: number;
+    pattern?: RegExp;
 }

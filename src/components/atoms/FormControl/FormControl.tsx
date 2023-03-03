@@ -1,40 +1,41 @@
 import React from 'react';
 import { Form, InputGroup } from 'react-bootstrap';
 import FormControlProps from './FormControlProps';
-import useDebounce from 'react-cork/useDebounce';
 
-export default function FormControl({ className, label, htmlFor, ariaDescribedby, caption, captionId, appendControl, prependControl, ariaLabel, onChange, debounceTime, maxLength, ...props }: FormControlProps) {
-
-    const _onChange = useDebounce(onChange, (debounceTime ?? 200));
+export default function FormControl({ className, label, htmlFor, ariaDescribedby, caption, captionId, appendControl, prependControl, ariaLabel, maxLength, required, ...props }: FormControlProps) {
 
     return (
         <>
-            <Form.Label
-                htmlFor={htmlFor}
-            >
-                {label}
-            </Form.Label>
-            <InputGroup
-                className={className}
-            >
-                <>
-                    {(prependControl) ? <>{prependControl}</> : <></>}
-                    <Form.Control
-                        {...props}
-                        aria-label={ariaLabel}
-                        aria-describedby={ariaDescribedby}
-                        onChange={_onChange}
-                        maxLength={maxLength ?? 255}
-                    />
-                    {(appendControl) ? <>{appendControl}</> : <></>}
-                </>
-            </InputGroup>
-            <Form.Text
-                id={captionId}
-                muted
-            >
-                {caption}
-            </Form.Text>
+            <Form.Group>
+                <Form.Label
+                    htmlFor={htmlFor}
+                >
+                    {(required) ? `${label} *` : label}
+                </Form.Label>
+                <InputGroup
+                    className={className}
+                >
+                    <>
+                        {(prependControl) ? <>{prependControl}</> : <></>}
+                        <Form.Control
+                            {...props}
+                            aria-label={ariaLabel}
+                            aria-describedby={ariaDescribedby}
+                            maxLength={maxLength ?? 255}
+                            required={required}
+                        />
+                        {(appendControl) ? <>{appendControl}</> : <></>}
+                    </>
+                    <Form.Control.Feedback>Looks good</Form.Control.Feedback>
+                    <Form.Control.Feedback type='invalid'>Does Not look good</Form.Control.Feedback>
+                </InputGroup>
+                <Form.Text
+                    id={captionId}
+                    muted
+                >
+                    {caption}
+                </Form.Text>
+            </Form.Group>
         </>
     )
 }

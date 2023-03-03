@@ -14,7 +14,6 @@ declare namespace IForm {
         className?: string;
         bsPrefix?: string;
         required?: boolean;
-        defaultValue?: string | number | any[];
         onChange?: (e: any) => void;
         onInput?: (input: any) => void;
         onKeyDown?: (e: React.KeyboardEvent) => void;
