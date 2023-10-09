@@ -1,67 +1,82 @@
-import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
-import { default as DayPickerComp, Modifiers } from "react-day-picker";
-
-import 'react-day-picker/lib/style.css';
-import styles from './DayPicker.module.scss';
+import React, { useState } from "react";
+import { Button } from "react-bootstrap";
+import {
+  DayPicker as DayPickerComp,
+  DayClickEventHandler,
+  FooterProps,
+  Matcher,
+} from "react-day-picker";
+import useDateTime from "./useDateTime";
+import reactDayPickerStyles from "react-day-picker/dist/style.module.css";
+import styles from "./DayPicker.module.scss";
 
 interface Props {
-    range?: any;
-    dateRange?: any;
-    selectedDay?: any;
-    modifiers?: Modifiers;
-    onClick?: any;
-    onReset: any;
-    onTodayClick: any;
-    date?: Date;
-    captionElement?: (props: { date?: Date; onChange?: (date: Date) => void }) => JSX.Element;
-    initialDate?: Date;
-    tabIndex?: number;
+  onSelect: (selectedDay?: string) => void;
+  onDayClick?: DayClickEventHandler;
+  initialDate?: string;
+  disabled?: Matcher | Matcher[];
+  className?: string;
 }
-export default function DayPicker({ range, dateRange, selectedDay, modifiers, onClick, onReset, onTodayClick, captionElement: CaptionElement, initialDate, tabIndex }: Props) {
+export default function DayPicker({
+  onSelect,
+  onDayClick,
+  initialDate,
+  disabled,
+  className,
+}: Props) {
+  const dateTime = useDateTime();
+  const _initialDate = initialDate ? new Date(initialDate) : undefined;
+  const [selectedDay, setSelectedDay] = useState<Date | undefined>(
+    _initialDate
+  );
 
-    const [month, setMonth] = useState((range) ? dateRange?.from : selectedDay);
-    const handleYearMonthChange = (month: any) => {
-        setMonth(month);
-    }
+  React.useEffect(() => {
+    const formattedDate = selectedDay
+      ? dateTime.formatDate(selectedDay)
+      : undefined;
+    onSelect?.(formattedDate);
+  }, [selectedDay]);
 
-    const weekdayShort = ['Mo', 'Su', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+  const FooterComp = (props: FooterProps) => (
+    <>
+      <div className="d-flex justify-content-center pb-2 px-2">
+        <Button
+          className="me-1"
+          onClick={() =>
+            setSelectedDay(initialDate ? new Date(initialDate) : undefined)
+          }
+          variant={"link"}
+        >
+          Reset
+        </Button>
+        <Button
+          className="me-1"
+          onClick={() => setSelectedDay(new Date())}
+          variant={"link"}
+        >
+          Today
+        </Button>
+      </div>
+    </>
+  );
 
-    return (
-        <>
-            <div className={`d-flex justify-content-center`}>
-                <div>
-                    {/* <DayPickerComp
-                        weekdaysShort={weekdayShort}
-                        month={month}
-                        className={styles.compContainer}
-                        numberOfMonths={1}
-                        selectedDays={(range) ? [dateRange?.from, { ...dateRange }] : selectedDay}
-                        modifiers={modifiers}
-                        onDayClick={onClick}
-                        captionElement={({ date }: any) => ((CaptionElement) ? <CaptionElement date={date as any} onChange={handleYearMonthChange} /> : null)}
-                        disabledDays={{ before: (initialDate ? initialDate as any : undefined) }}
-                    /> */}
-                    <div className="d-flex justify-content-start pb-2 px-2">
-                        <Button
-                            tabIndex={tabIndex}
-                            className="me-1"
-                            onClick={() => setMonth(onReset())}
-                            variant={'link'}
-                        >
-                            Reset
-                        </Button>
-                        <Button
-                            tabIndex={tabIndex}
-                            className="me-1"
-                            onClick={() => setMonth(onTodayClick())}
-                            variant={'link'}
-                        >
-                            Today
-                        </Button>
-                    </div>
-                </div>
-            </div>
-        </>
-    )
+  return (
+    <>
+      <div className={`d-flex justify-content-center ${className}`}>
+        <DayPickerComp
+          classNames={{ ...reactDayPickerStyles }}
+          mode="single"
+          onSelect={setSelectedDay}
+          selected={selectedDay}
+          onDayClick={onDayClick}
+          showOutsideDays
+          footer={<FooterComp />}
+          modifiersClassNames={{
+            selected: styles.selectedDay,
+          }}
+          disabled={disabled}
+        />
+      </div>
+    </>
+  );
 }
